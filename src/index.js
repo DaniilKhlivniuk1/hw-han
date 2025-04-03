@@ -1,35 +1,48 @@
-// Завдання 1: 
-document.getElementById("startHourButton").addEventListener("click", startHourTimer);
-function startHourTimer() {
-    let timeLeft = 60; 
-    let interval = setInterval(() => {
-        document.getElementById("hourTimerMessage").textContent = `Залишилось: ${timeLeft} хвилин`;
-        if (timeLeft === 30) alert("Залишилось менше половини часу!");
-        if (timeLeft === 0) clearInterval(interval);
-        timeLeft--;
-    }, 60000);
-}
+class CountdownTimer {
+    constructor({ selector, targetDate }) {
+        this.selector = selector;
+        this.targetDate = targetDate;
+        this.timerElement = document.querySelector(selector);
+        this.refs = {
+            days: this.timerElement.querySelector('[data-value="days"]'),
+            hours: this.timerElement.querySelector('[data-value="hours"]'),
+            mins: this.timerElement.querySelector('[data-value="mins"]'),
+            secs: this.timerElement.querySelector('[data-value="secs"]'),
+        };
+        this.start();
+    }
 
-// Завдання 2: 
-const startButton = document.getElementById("startButton");
-startButton.addEventListener("click", startSecondTimer);
+    start() {
+        this.updateTimer();
+        this.interval = setInterval(() => {
+            this.updateTimer();
+        }, 1000);
+    }
 
-function startSecondTimer() {
-    let timeLeft = 30000; 
-    startButton.disabled = true; 
-
-    let interval = setInterval(() => {
-        document.getElementById("secondTimerMessage").textContent = `Залишилось: ${(timeLeft / 1000).toFixed(1)} секунд`;
-
-        if (timeLeft <= 10000) animateEffect();
-        if (timeLeft <= 0) {
-            clearInterval(interval);
-            startButton.disabled = false; 
+    updateTimer() {
+        const time = this.targetDate - new Date();
+        if (time <= 0) {
+            clearInterval(this.interval);
+            return;
         }
-        timeLeft -= 10;
-    }, 10);
+
+        const days = Math.floor(time / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((time % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const mins = Math.floor((time % (1000 * 60 * 60)) / (1000 * 60));
+        const secs = Math.floor((time % (1000 * 60)) / 1000);
+
+        this.refs.days.textContent = days;
+        this.refs.hours.textContent = this.pad(hours);
+        this.refs.mins.textContent = this.pad(mins);
+        this.refs.secs.textContent = this.pad(secs);
+    }
+
+    pad(value) {
+        return String(value).padStart(2, '0');
+    }
 }
 
-function animateEffect() {
-    document.body.style.backgroundColor = `rgb(${Math.random()*255}, ${Math.random()*255}, ${Math.random()*255})`;
-}
+new CountdownTimer({
+    selector: '#timer-1',
+    targetDate: new Date('Jul 17, 2025'),
+});
