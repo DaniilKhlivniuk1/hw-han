@@ -1,34 +1,34 @@
 body {
-  text-align: center;
-  background-color: #f4f4f4;
-  padding: 20px;
-  font-family: Arial, sans-serif;
-}
-
-h1, h2 {
-  color: #333;
-}
-
-button {
-  cursor: pointer;
   color: #fff;
-  background-color: #007bff;
-  border: none;
-  border-radius: 5px;
-  margin: 10px;
-  padding: 10px 20px;
-  font-size: 18px;
-  transition: background .3s;
+  background-color: #282c36;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+  display: flex;
 }
 
-button:hover {
-  background-color: #0056b3;
+.timer {
+  background: #3a3f4b;
+  border-radius: 10px;
+  gap: 15px;
+  padding: 20px;
+  display: flex;
+  box-shadow: 0 4px 10px #0000004d;
 }
 
-#hourTimerMessage, #secondTimerMessage {
-  color: #d9534f;
-  margin-top: 20px;
-  font-size: 24px;
+.field {
+  text-align: center;
+}
+
+.value {
+  font-size: 2rem;
   font-weight: bold;
+  display: block;
+}
+
+.label {
+  color: #bbb;
+  font-size: .9rem;
 }
 /*# sourceMappingURL=hw-han.4d663569.css.map */
